@@ -1,0 +1,54 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>生日快乐！</title>
+  <style>
+    body {
+      text-align: center;
+      background-color: pink;
+      font-family: 'Comic Sans MS', cursive;
+    }
+    h1 {
+      font-size: 3em;
+      color: red;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      background-color: yellow;
+      border: 2px solid red;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>嘿嘿，生日快乐！</h1>
+  <p>点一下下边按钮看看？</p>
+  <button onclick="startPrank()">接受祝福</button>
+
+  <script>
+    function startPrank() {
+      for (let i = 0; i < 20; i++) {
+        setTimeout(() => openEvilWindow(), i * 400);
+      }
+    }
+
+    function openEvilWindow() {
+      let w = window.open("", "", "width=300,height=200,top=" + Math.random() * screen.height + ",left=" + Math.random() * screen.width);
+      if (!w) return; // 被拦截
+      w.document.write(`
+        <h2 style="color:blue; font-family:Comic Sans MS;">生日快乐！</h2>
+        <p>关不掉我哟~</p>
+        <script>
+          window.onbeforeunload = function() {
+            window.open('', '', 'width=300,height=200,top=' + Math.random() * screen.height + ',left=' + Math.random() * screen.width);
+            return '你真的要关我吗？';
+          };
+        <\/script>
+      `);
+    }
+  </script>
+</body>
+</html>
