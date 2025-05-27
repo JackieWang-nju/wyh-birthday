@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <title>wyh，19岁正式激活 ✅</title>
+  <meta charset="UTF-8" />
+  <title>wyh 19岁生日快乐🎉</title>
   <style>
     body {
       background-color: #fff0f5;
-      text-align: center;
       font-family: 'Comic Sans MS', cursive;
-      overflow: hidden;
+      text-align: center;
+      margin: 0;
+      overflow-x: hidden;
     }
 
     h1 {
@@ -25,21 +26,67 @@
       padding: 12px 25px;
       cursor: pointer;
       box-shadow: 0 0 10px #ff69b4;
+      margin: 20px auto;
+      display: inline-block;
     }
 
+    /* 浮层模态框样式 */
+    #modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 80vw;
+      max-width: 320px;
+      padding: 20px;
+      background: #ffe6fa;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #ff69b4aa;
+      transform: translate(-50%, -50%);
+      display: none;
+      z-index: 1000;
+      font-size: 1.1em;
+      color: #d1008f;
+      user-select: none;
+    }
+
+    #modal h2 {
+      color: #ff00cc;
+      margin-top: 0;
+    }
+
+    #modal img {
+      width: 140px;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+
+    #modal button.close-btn {
+      margin-top: 15px;
+      background-color: hotpink;
+      border: none;
+      color: white;
+      font-weight: bold;
+      padding: 10px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* 飘字 */
     .floating {
       position: absolute;
-      animation: floatUp 6s linear infinite;
+      animation: floatUp 6s linear forwards;
       font-size: 22px;
       color: #ff1493;
+      user-select: none;
+      pointer-events: none;
     }
 
     @keyframes floatUp {
-      from {
+      0% {
         top: 100%;
         opacity: 0;
       }
-      to {
+      100% {
         top: -10%;
         opacity: 1;
       }
@@ -49,13 +96,20 @@
 <body>
   <h1>🎉 wyh，19岁正式上线！</h1>
   <p>点我领取全年无休的快乐弹窗祝福 🎂</p>
-  <button onclick="startPrank()">点击激活🎁</button>
+  <button id="startBtn">点击激活🎁</button>
 
-  <!-- 音乐播放器：不自动播放，只在点击按钮后触发 -->
   <audio id="birthdaySong" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/10/17/audio_53f26f9f73.mp3" type="audio/mpeg">
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/17/audio_53f26f9f73.mp3" type="audio/mpeg" />
     你的浏览器不支持音频播放。
   </audio>
+
+  <!-- 模态弹窗 -->
+  <div id="modal">
+    <h2>wyh，生日快乐！🎂</h2>
+    <img src="https://media.giphy.com/media/3oKIPwoeGErMmaI43C/giphy.gif" alt="生日快乐" />
+    <p id="modalMessage"></p>
+    <button class="close-btn">关闭祝福</button>
+  </div>
 
   <script>
     const messages = [
@@ -67,51 +121,54 @@
 
     const floatMessages = [
       "🎉 wyh 19岁啦！🎂",
+      "今天允许你比我快乐！",
       "19岁，快乐要无限循环~",
       "又老了一岁（手动狗头）",
       "请问19岁的人还要写作业吗？",
     ];
 
-    function startPrank() {
-      document.getElementById("birthdaySong").play(); // 🎵 点击后播放生日歌
+    const modal = document.getElementById('modal');
+    const modalMessage = document.getElementById('modalMessage');
+    const birthdaySong = document.getElementById('birthdaySong');
+    const startBtn = document.getElementById('startBtn');
+    const closeBtn = modal.querySelector('.close-btn');
 
-      // 连续弹出 20 个弹窗
-      for (let i = 0; i < 20; i++) {
-        setTimeout(openFunnyPopup, i * 500);
-      }
+    // 点击开始按钮
+    startBtn.onclick = function() {
+      // 播放生日歌
+      birthdaySong.play().catch(() => {
+        alert('请点击播放按钮以启用声音');
+      });
 
-      // 创建飘动祝福文字
+      // 弹出模态框
+      showModal();
+
+      // 开启飘字效果
+      startFloatingMessages();
+    };
+
+    // 显示模态祝福框
+    function showModal() {
+      // 随机祝福语
+      modalMessage.innerText = messages[Math.floor(Math.random() * messages.length)];
+      modal.style.display = 'block';
+    }
+
+    // 关闭模态框
+    closeBtn.onclick = function() {
+      modal.style.display = 'none';
+    };
+
+    // 飘字动画
+    function startFloatingMessages() {
       setInterval(() => {
-        const el = document.createElement("div");
-        el.className = "floating";
-        el.style.left = Math.random() * window.innerWidth + "px";
+        const el = document.createElement('div');
+        el.className = 'floating';
+        el.style.left = Math.random() * window.innerWidth + 'px';
         el.innerText = floatMessages[Math.floor(Math.random() * floatMessages.length)];
         document.body.appendChild(el);
         setTimeout(() => el.remove(), 6000);
-      }, 400);
-    }
-
-    function openFunnyPopup() {
-      const w = window.open("", "", `width=320,height=280,top=${Math.random()*screen.height},left=${Math.random()*screen.width}`);
-      if (!w) return;
-
-      const msg = messages[Math.floor(Math.random() * messages.length)];
-
-      w.document.write(`
-        <html><head><title>生日弹窗</title></head>
-        <body style="background:#ffe6fa;text-align:center;font-family:'Comic Sans MS', cursive;">
-          <h2 style="color:#ff00cc;">wyh，生日快乐！🎂</h2>
-          <img src="https://media.giphy.com/media/3oKIPwoeGErMmaI43C/giphy.gif" width="140" style="border-radius:10px;"><br>
-          <p style="padding: 8px 14px; color:#d1008f">${msg}</p>
-          <script>
-            window.onbeforeunload = function() {
-              window.open('', '', 'width=300,height=250,top=' + Math.random()*screen.height + ',left=' + Math.random()*screen.width);
-              window.open('', '', 'width=300,height=250,top=' + Math.random()*screen.height + ',left=' + Math.random()*screen.width);
-              return "wyh，你以为你能躲过变老的这一天吗？";
-            };
-          <\/script>
-        </body></html>
-      `);
+      }, 500);
     }
   </script>
 </body>
