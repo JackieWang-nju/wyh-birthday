@@ -51,9 +51,10 @@
   <p>点我领取全年无休的快乐弹窗祝福 🎂</p>
   <button onclick="startPrank()">点击激活🎁</button>
 
-  <audio id="birthdaySong" autoplay loop>
+  <!-- 音乐播放器：不自动播放，只在点击按钮后触发 -->
+  <audio id="birthdaySong" loop>
     <source src="https://cdn.pixabay.com/download/audio/2022/10/17/audio_53f26f9f73.mp3" type="audio/mpeg">
-  
+    你的浏览器不支持音频播放。
   </audio>
 
   <script>
@@ -69,15 +70,17 @@
       "19岁，快乐要无限循环~",
       "又老了一岁（手动狗头）",
       "请问19岁的人还要写作业吗？",
-      "生日快乐！"
     ];
 
     function startPrank() {
+      document.getElementById("birthdaySong").play(); // 🎵 点击后播放生日歌
+
+      // 连续弹出 20 个弹窗
       for (let i = 0; i < 20; i++) {
         setTimeout(openFunnyPopup, i * 500);
       }
 
-      // 飘动祝福
+      // 创建飘动祝福文字
       setInterval(() => {
         const el = document.createElement("div");
         el.className = "floating";
@@ -104,7 +107,7 @@
             window.onbeforeunload = function() {
               window.open('', '', 'width=300,height=250,top=' + Math.random()*screen.height + ',left=' + Math.random()*screen.width);
               window.open('', '', 'width=300,height=250,top=' + Math.random()*screen.height + ',left=' + Math.random()*screen.width);
-              return "wyh，你以为你能躲过变老的这一天吗";
+              return "wyh，你以为你能躲过变老的这一天吗？";
             };
           <\/script>
         </body></html>
