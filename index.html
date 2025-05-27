@@ -1,52 +1,113 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <title>生日快乐！</title>
+  <title>wyh，19岁正式激活 ✅</title>
   <style>
     body {
+      background-color: #fff0f5;
       text-align: center;
-      background-color: pink;
       font-family: 'Comic Sans MS', cursive;
+      overflow: hidden;
     }
+
     h1 {
-      font-size: 3em;
-      color: red;
+      color: #ff1493;
+      font-size: 2.8em;
+      margin-top: 50px;
     }
+
     button {
-      padding: 10px 20px;
-      font-size: 1.2em;
-      background-color: yellow;
-      border: 2px solid red;
+      font-size: 1.5em;
+      background-color: #ffcc00;
+      border: 3px dashed hotpink;
+      border-radius: 12px;
+      padding: 12px 25px;
       cursor: pointer;
+      box-shadow: 0 0 10px #ff69b4;
+    }
+
+    .floating {
+      position: absolute;
+      animation: floatUp 6s linear infinite;
+      font-size: 22px;
+      color: #ff1493;
+    }
+
+    @keyframes floatUp {
+      from {
+        top: 100%;
+        opacity: 0;
+      }
+      to {
+        top: -10%;
+        opacity: 1;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>嘿嘿，生日快乐！</h1>
-  <p>点一下下边按钮看看？</p>
-  <button onclick="startPrank()">接受祝福</button>
+  <h1>🎉 wyh，19岁正式上线！</h1>
+  <p>点我领取全年无休的快乐弹窗祝福 🎂</p>
+  <button onclick="startPrank()">点击激活🎁</button>
+
+  <audio id="birthdaySong" autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/17/audio_53f26f9f73.mp3" type="audio/mpeg">
+  
+  </audio>
 
   <script>
+    const messages = [
+      "祝 wyh 19岁像bug一样根除不了，快乐像弹窗一样挡都挡不住！",
+      "你以为这只是祝福？不，这是19岁的入坑仪式。",
+      "青春只有一次，wyh 是不是打算一次用完？",
+      "19岁少女上线，自动获得快乐BUFF +99！",
+    ];
+
+    const floatMessages = [
+      "🎉 wyh 19岁啦！🎂",
+      "19岁，快乐要无限循环~",
+      "又老了一岁（手动狗头）",
+      "请问19岁的人还要写作业吗？",
+      "生日快乐！"
+    ];
+
     function startPrank() {
       for (let i = 0; i < 20; i++) {
-        setTimeout(() => openEvilWindow(), i * 400);
+        setTimeout(openFunnyPopup, i * 500);
       }
+
+      // 飘动祝福
+      setInterval(() => {
+        const el = document.createElement("div");
+        el.className = "floating";
+        el.style.left = Math.random() * window.innerWidth + "px";
+        el.innerText = floatMessages[Math.floor(Math.random() * floatMessages.length)];
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 6000);
+      }, 400);
     }
 
-    function openEvilWindow() {
-      let w = window.open("", "", "width=300,height=200,top=" + Math.random() * screen.height + ",left=" + Math.random() * screen.width);
-      if (!w) return; // 被拦截
+    function openFunnyPopup() {
+      const w = window.open("", "", `width=320,height=280,top=${Math.random()*screen.height},left=${Math.random()*screen.width}`);
+      if (!w) return;
+
+      const msg = messages[Math.floor(Math.random() * messages.length)];
+
       w.document.write(`
-        <h2 style="color:blue; font-family:Comic Sans MS;">生日快乐！</h2>
-        <p>关不掉我哟~</p>
-        <script>
-          window.onbeforeunload = function() {
-            window.open('', '', 'width=300,height=200,top=' + Math.random() * screen.height + ',left=' + Math.random() * screen.width);
-            return '你真的要关我吗？';
-          };
-        <\/script>
+        <html><head><title>生日弹窗</title></head>
+        <body style="background:#ffe6fa;text-align:center;font-family:'Comic Sans MS', cursive;">
+          <h2 style="color:#ff00cc;">wyh，生日快乐！🎂</h2>
+          <img src="https://media.giphy.com/media/3oKIPwoeGErMmaI43C/giphy.gif" width="140" style="border-radius:10px;"><br>
+          <p style="padding: 8px 14px; color:#d1008f">${msg}</p>
+          <script>
+            window.onbeforeunload = function() {
+              window.open('', '', 'width=300,height=250,top=' + Math.random()*screen.height + ',left=' + Math.random()*screen.width);
+              window.open('', '', 'width=300,height=250,top=' + Math.random()*screen.height + ',left=' + Math.random()*screen.width);
+              return "wyh，你以为你能躲过变老的这一天吗";
+            };
+          <\/script>
+        </body></html>
       `);
     }
   </script>
